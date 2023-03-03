@@ -1,1 +1,1 @@
-# understanding-typescript
+# Understanding Typescript

@@ -15,3 +15,15 @@ var number2 = 2.8;
 var printResult = true;
 var resultPhrase = 'Result is: ';
 add(number1, number2, printResult, resultPhrase);
+// You can do this with typescript:
+var person = {
+    name: "David",
+    age: 30
+};
+// However, it is better to allow typescript to infer the data type by writing it like this:
+var person2 = {
+    name: "Steven",
+    age: 30
+};
+console.log(person.name);
+console.log(person2.name);

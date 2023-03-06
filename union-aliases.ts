@@ -1,4 +1,4 @@
-// union types - (ex: input1: number | string):
+// Typescript 'union' types - (ex: input1: number | string):
 function combine(input1: number | string, input2: number | string) {
   let result;
   if (typeof input1 === 'number' && typeof input2 === 'number') {
@@ -16,7 +16,7 @@ const combinedNames = combine('Max', 'Anna');
 console.log(combinedNames);
 
 
-// literal types - (ex: resultConversion: 'as-number' | 'as-text'):
+// Typescript 'literal' types - (ex: resultConversion: 'as-number' | 'as-text'):
 function combine2(input1: number | string, input2: number | string, resultConversion: 'as-number' | 'as-text') {
   let result;
   if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {
@@ -37,7 +37,7 @@ const combinedNames2 = combine2('Max', 'Anna', 'as-text');
 console.log(combinedNames2);
 
 
-// Type aliases:
+// Typescript 'aliases' types:
 type Combinable = number | string;
 type ConversionDescriptor = 'as-number' | 'as-text';
 

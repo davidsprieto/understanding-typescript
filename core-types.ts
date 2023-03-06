@@ -43,7 +43,7 @@ const person3 = {
 }
 
 let favoriteActivities: string[];
-favoriteActivities = ['Sports']
+favoriteActivities = ['Sports'];
 
 for (const hobby of person3.hobbies) {
   console.log(hobby.toUpperCase());
@@ -54,7 +54,8 @@ const person4: {
   name: string,
   age: number,
   hobbies: string[],
-  role: [number, string]
+  role: [number, string],
+
 } = {
   name: "Steven",
   age: 30,
@@ -66,3 +67,21 @@ const person4: {
 // person4.role[1] = 10;
 
 person4.role = [0, 'admin'];
+
+// Typescript enum (custom type - automatically enumerated global constant identifiers) type:
+enum Role {ADMIN, READ_ONLY, AUTHOR}
+
+const person5 = {
+  name: "Steven",
+  age: 30,
+  hobbies: ['Sports', 'Cooking'],
+  role: Role.ADMIN
+}
+
+if (person5.role === Role.ADMIN) {
+  console.log('is admin');
+}
+
+// Typescript any (flexible - but avoid it if possible. Typescript is used to write better js and be more specific/strict - using any negates that.) type:
+let favoriteActivities2: any[];
+favoriteActivities2 = ['Sports', 5];

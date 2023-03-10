@@ -7,7 +7,7 @@ userInput = 'David';
 if (typeof userInput === 'string') {
     userName = userInput;
 }
-// Typescript 'never' (never returns anything) type:
+// Typescript 'never' (doesn't return anything) type:
 function generateError(message, code) {
     throw { message: message, errorCode: code };
 }

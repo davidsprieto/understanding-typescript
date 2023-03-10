@@ -9,7 +9,7 @@ if (typeof userInput === 'string') {
 }
 
 
-// Typescript 'never' (never returns anything) type:
+// Typescript 'never' (doesn't return anything) type:
 function generateError(message: string, code: number): never {
   throw {message: message, errorCode: code};
 }

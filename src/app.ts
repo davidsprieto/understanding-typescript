@@ -61,8 +61,27 @@ console.log(IT);
 
 
 class AccountingDepartment extends Department {
+  private lastReport: string;
+
+  // getter method has to return a value:
+  get mostRecentReport() {
+    if (this.lastReport) {
+      return this.lastReport;
+    }
+    throw new Error('No Report Found.')
+  }
+
+  // setter method has to take in an argument/parameter:
+  set mostRecentReport(data: string) {
+    if (!data) {
+      throw new Error('Please pass in a valid input');
+    }
+    this.addReport(data);
+  }
+
   constructor(id: number, private reports: string[]) {
     super(id, 'Accounting');
+    this.lastReport = reports[this.reports.length - 1];
   }
 
   // can override base class methods with a different method if necessary
@@ -75,6 +94,7 @@ class AccountingDepartment extends Department {
 
   addReport(data: string) {
     this.reports.push(data);
+    this.lastReport = data;
   }
 
   printReports() {
@@ -84,11 +104,16 @@ class AccountingDepartment extends Department {
 
 const accounting = new AccountingDepartment(1, ['Q1 data', 'Q2 data', 'Crypto Assets']);
 
+// accessing the getter method:
+console.log(accounting.mostRecentReport);
+
 const quarterThreeData = 'Q3 data';
 accounting.addReport(quarterThreeData);
 
-accounting.printReports();
+// accessing the setter method:
+accounting.mostRecentReport = 'Q4 data';
 
+accounting.printReports();
 
 // SELF PRACTICE SESSION FROM WHAT I'VE LEARNED:
 class Employee {

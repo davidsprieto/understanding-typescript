@@ -69,12 +69,24 @@ const IT = new ITDepartment(1, ['David', 'Tom', 'Carl', 'Jake']);
 console.log(IT);
 
 
+// Singleton Pattern (only one instance of a class can be created with the singleton pattern - private constructor, an instance of the class is created by
+// calling a method from within the class which checks for an instance of it, if one doesn't exist then one is created):
 class AccountingDepartment extends Department {
   private lastReport: string;
+  private static instance: AccountingDepartment;
 
-  constructor(id: number, private reports: string[]) {
+  private constructor(id: number, private reports: string[]) {
     super(id, 'Accounting');
     this.lastReport = reports[this.reports.length - 1];
+  }
+
+  static getInstance() {
+    // can also be written as (AccountingDepartment.instance):
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new AccountingDepartment(1, ['Q1 data', 'Q2 data', 'Crypto Assets']);
+    return this.instance;
   }
 
   // getter method has to return a value:
@@ -119,7 +131,11 @@ class AccountingDepartment extends Department {
 const employeeDavid = Department.createEmployee('David');
 console.log(employeeDavid, Department.fiscalYear);
 
-const accounting = new AccountingDepartment(1, ['Q1 data', 'Q2 data', 'Crypto Assets']);
+// No longer creating an instance of the 'Accounting Department' like we normally do below:
+// const accounting = new AccountingDepartment(1, ['Q1 data', 'Q2 data', 'Crypto Assets']);
+
+// Instead to make sure only one instance of the 'Accounting Department' is created, the constructor is set to private, and it's created through a method within the class:
+const accounting = AccountingDepartment.getInstance();
 
 // accessing the getter method:
 console.log(accounting.mostRecentReport);

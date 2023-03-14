@@ -1,5 +1,6 @@
-// Typescript 'class', 'constructor', and 'this' keyword && 'private', 'public', protected, and 'readonly' access modifiers:
+// Typescript Classes && Interfaces:
 class Department {
+  static fiscalYear = 2023;
   private id: number;
   private readonly name: string;
   // 'protected' allows access to the 'protected' variable from within classes that extend the base class
@@ -8,6 +9,10 @@ class Department {
   constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
+  }
+
+  static createEmployee(name: string) {
+    return {name: name};
   }
 
   describe() {
@@ -25,7 +30,7 @@ class Department {
   }
 }
 
-const department = new Department(1,"Accounting");
+const department = new Department(1, "Accounting");
 console.log(department);
 
 department.addEmployee("David");
@@ -102,6 +107,10 @@ class AccountingDepartment extends Department {
   }
 }
 
+// Accessing static methods and variables/properties in the 'Department' class:
+const employeeDavid = Department.createEmployee('David');
+console.log(employeeDavid, Department.fiscalYear);
+
 const accounting = new AccountingDepartment(1, ['Q1 data', 'Q2 data', 'Crypto Assets']);
 
 // accessing the getter method:
@@ -115,9 +124,10 @@ accounting.mostRecentReport = 'Q4 data';
 
 accounting.printReports();
 
+
 // SELF PRACTICE SESSION FROM WHAT I'VE LEARNED:
 class Employee {
-  private employee: {name: string, job: string} = {
+  private employee: { name: string, job: string } = {
     name: "",
     job: ""
   };

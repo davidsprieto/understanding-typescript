@@ -1,12 +1,12 @@
 // Typescript Classes && Interfaces:
-class Department {
+abstract class Department {
   static fiscalYear = 2023;
-  private id: number;
+  protected id: number;
   private readonly name: string;
   // 'protected' allows access to the 'protected' variable from within classes that extend the base class
   protected employees: string[] = [];
 
-  constructor(id: number, name: string) {
+  protected constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
   }
@@ -15,9 +15,7 @@ class Department {
     return {name: name};
   }
 
-  describe() {
-    console.log('Department: ' + this.name);
-  }
+  abstract describe(this: Department): void;
 
   addEmployee(employee: string) {
     // validation here
@@ -30,6 +28,7 @@ class Department {
   }
 }
 
+/*
 const department = new Department(1, "Accounting");
 console.log(department);
 
@@ -47,6 +46,7 @@ product.addEmployee("Lisa");
 
 product.describe();
 product.printEmployeeInformation();
+ */
 
 
 // Typescript inheritance:
@@ -58,6 +58,10 @@ class ITDepartment extends Department {
     this.admins = admins;
   }
 
+  describe() {
+    console.log('IT Department - ID: ' + this.id);
+  }
+
 }
 
 const IT = new ITDepartment(1, ['David', 'Tom', 'Carl', 'Jake']);
@@ -67,6 +71,11 @@ console.log(IT);
 
 class AccountingDepartment extends Department {
   private lastReport: string;
+
+  constructor(id: number, private reports: string[]) {
+    super(id, 'Accounting');
+    this.lastReport = reports[this.reports.length - 1];
+  }
 
   // getter method has to return a value:
   get mostRecentReport() {
@@ -84,17 +93,16 @@ class AccountingDepartment extends Department {
     this.addReport(data);
   }
 
-  constructor(id: number, private reports: string[]) {
-    super(id, 'Accounting');
-    this.lastReport = reports[this.reports.length - 1];
-  }
-
-  // can override base class methods with a different method if necessary
+  // can override base class methods with a different method if desired - such as with the 'addEmployee' method below:
   addEmployee(name: string) {
     if (name === 'David') {
       return;
     }
     this.employees.push(name);
+  }
+
+  describe() {
+    console.log('Accounting Department - ID: ' + this.id);
   }
 
   addReport(data: string) {
@@ -107,7 +115,7 @@ class AccountingDepartment extends Department {
   }
 }
 
-// Accessing static methods and variables/properties in the 'Department' class:
+// Accessing static a method and property in the 'Department' class:
 const employeeDavid = Department.createEmployee('David');
 console.log(employeeDavid, Department.fiscalYear);
 

@@ -1,7 +1,8 @@
 "use strict";
-// Typescript 'class', 'constructor', and 'this' keyword && 'private', 'public', and 'readonly' access modifiers:
+// Typescript 'class', 'constructor', and 'this' keyword && 'private', 'public', protected, and 'readonly' access modifiers:
 class Department {
     constructor(id, name) {
+        // 'protected' allows access to the 'protected' variable from within classes that extend the base class
         this.employees = [];
         this.id = id;
         this.name = name;
@@ -43,6 +44,13 @@ class AccountingDepartment extends Department {
     constructor(id, reports) {
         super(id, 'Accounting');
         this.reports = reports;
+    }
+    // can override base class methods with a different method if necessary
+    addEmployee(name) {
+        if (name === 'David') {
+            return;
+        }
+        this.employees.push(name);
     }
     addReport(data) {
         this.reports.push(data);

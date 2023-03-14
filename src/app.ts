@@ -24,14 +24,14 @@ class Department {
   }
 }
 
-const accounting = new Department(1,"Accounting");
-console.log(accounting);
+const department = new Department(1,"Accounting");
+console.log(department);
 
-accounting.addEmployee("David");
-accounting.addEmployee("Kelly");
+department.addEmployee("David");
+department.addEmployee("Kelly");
 
-accounting.describe();
-accounting.printEmployeeInformation();
+department.describe();
+department.printEmployeeInformation();
 
 const product = new Department(2, "Product");
 console.log(product);
@@ -41,6 +41,44 @@ product.addEmployee("Lisa");
 
 product.describe();
 product.printEmployeeInformation();
+
+
+// Typescript inheritance:
+class ITDepartment extends Department {
+  admins: string[]; // can be written as 'public admins: string[]' - default access modifier is 'public';
+
+  constructor(id: number, admins: string[]) {
+    super(id, 'IT');
+    this.admins = admins;
+  }
+
+}
+
+const IT = new ITDepartment(1, ['David', 'Tom', 'Carl', 'Jake']);
+
+console.log(IT);
+
+
+class AccountingDepartment extends Department {
+  constructor(id: number, private reports: string[]) {
+    super(id, 'Accounting');
+  }
+
+  addReport(data: string) {
+    this.reports.push(data);
+  }
+
+  printReports() {
+    console.log(this.reports);
+  }
+}
+
+const accounting = new AccountingDepartment(1, ['Q1 data', 'Q2 data', 'Crypto Assets']);
+
+const quarterThreeData = 'Q3 data';
+accounting.addReport(quarterThreeData);
+
+accounting.printReports();
 
 
 // SELF PRACTICE SESSION FROM WHAT I'VE LEARNED:

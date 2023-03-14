@@ -18,19 +18,44 @@ class Department {
         console.log(this.employees);
     }
 }
-const accounting = new Department(1, "Accounting");
-console.log(accounting);
-accounting.addEmployee("David");
-accounting.addEmployee("Kelly");
-accounting.describe();
-accounting.printEmployeeInformation();
+const department = new Department(1, "Accounting");
+console.log(department);
+department.addEmployee("David");
+department.addEmployee("Kelly");
+department.describe();
+department.printEmployeeInformation();
 const product = new Department(2, "Product");
 console.log(product);
 product.addEmployee("Tim");
 product.addEmployee("Lisa");
 product.describe();
 product.printEmployeeInformation();
-// A little practice:
+// Typescript inheritance:
+class ITDepartment extends Department {
+    constructor(id, admins) {
+        super(id, 'IT');
+        this.admins = admins;
+    }
+}
+const IT = new ITDepartment(1, ['David', 'Tom', 'Carl', 'Jake']);
+console.log(IT);
+class AccountingDepartment extends Department {
+    constructor(id, reports) {
+        super(id, 'Accounting');
+        this.reports = reports;
+    }
+    addReport(data) {
+        this.reports.push(data);
+    }
+    printReports() {
+        console.log(this.reports);
+    }
+}
+const accounting = new AccountingDepartment(1, ['Q1 data', 'Q2 data', 'Crypto Assets']);
+const quarterThreeData = 'Q3 data';
+accounting.addReport(quarterThreeData);
+accounting.printReports();
+// SELF PRACTICE SESSION FROM WHAT I'VE LEARNED:
 class Employee {
     constructor(name, job) {
         this.employee = {

@@ -59,14 +59,17 @@ console.log(individual);
 
 
 // Using 'extends' with an interface:
+// Optional parameters, properties, and methods use '?':
 interface Named {
   readonly named: string;
+  outputName?: string;
 }
 
 interface Greeting extends Named {
   greet(phrase: string): void;
 }
 
+// class 'Human' doesn't implement 'outputName' property as it's optional with the '?':
 class Human implements Greeting {
   readonly named: string;
 

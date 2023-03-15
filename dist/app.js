@@ -22,6 +22,7 @@ let individual;
 individual = new Person('David', 29);
 individual.greet("Hello, I am");
 console.log(individual);
+// class 'Human' doesn't implement 'outputName' property as it's optional with the '?':
 class Human {
     constructor(named) {
         this.named = named;

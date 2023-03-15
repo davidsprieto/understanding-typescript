@@ -29,3 +29,11 @@ class Human {
     greet(phrase) {
     }
 }
+let sum;
+sum = (a, b) => {
+    return a + b;
+};
+let addition;
+addition = (a, b) => {
+    return a + b;
+};

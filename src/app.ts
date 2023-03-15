@@ -78,3 +78,24 @@ class Human implements Greeting {
   }
 
 }
+
+
+// Custom function type refresher:
+type SumFn = (a: number, b: number) => number;
+
+let sum: SumFn;
+
+sum = (a: number, b: number) => {
+  return a + b;
+}
+
+// Interfaces as function types:
+interface AddFn {
+  (a: number, b: number): number;
+}
+
+let addition: AddFn;
+
+addition = (a: number, b: number) => {
+  return a + b;
+}

@@ -29,8 +29,10 @@ user.greet("Hello, I am");
 
 
 // Using interfaces with classes:
+// can add 'readonly' access modifier in interfaces:
 interface Greetable {
   name: string;
+  readonly age: number;
 
   greet(phrase: string): void
 }
@@ -54,3 +56,25 @@ let individual: Greetable;
 individual = new Person('David', 29);
 individual.greet("Hello, I am");
 console.log(individual);
+
+
+// Using 'extends' with an interface:
+interface Named {
+  readonly named: string;
+}
+
+interface Greeting extends Named {
+  greet(phrase: string): void;
+}
+
+class Human implements Greeting {
+  readonly named: string;
+
+  constructor(named: string) {
+    this.named = named;
+  }
+
+  greet(phrase: string): void {
+  }
+
+}

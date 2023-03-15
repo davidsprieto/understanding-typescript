@@ -22,3 +22,10 @@ let individual;
 individual = new Person('David', 29);
 individual.greet("Hello, I am");
 console.log(individual);
+class Human {
+    constructor(named) {
+        this.named = named;
+    }
+    greet(phrase) {
+    }
+}

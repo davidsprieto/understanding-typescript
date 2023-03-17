@@ -80,3 +80,39 @@ function useVehicle(vehicle: Vehicle) {
 
 useVehicle(v1);
 useVehicle(v2);
+
+
+// Typescript Discriminated Unions:
+interface Bird {
+  type: 'bird';
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: 'Horse';
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let speed: number;
+  switch (animal.type) {
+    case "bird":
+      speed = animal.flyingSpeed;
+      break;
+    case "Horse":
+      speed = animal.runningSpeed;
+      break;
+  }
+  console.log('Moving at speed: ' + speed);
+}
+
+let animal: Animal = {
+  type: "bird",
+  flyingSpeed: 10
+}
+
+moveAnimal(animal);
+
+

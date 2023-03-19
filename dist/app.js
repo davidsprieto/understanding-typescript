@@ -67,3 +67,15 @@ let animal = {
     flyingSpeed: 10
 };
 moveAnimal(animal);
+// Typescript Type Casting:
+const userInputElement1 = document.getElementById('user-input');
+// or written as:
+// Use the exclamation mark if you know the value will not be null
+const userInputElement2 = document.getElementById('user-input');
+userInputElement1.value = "Hello";
+userInputElement2.value = "Hello again";
+// If you're not sure whether the value is going to be null or not, remove the exclamation mark and the initial type casting then write it below with an if check and then type casted:
+const userInputElement3 = document.getElementById('user-input');
+if (userInputElement3) {
+    userInputElement3.value = 'Hello once more';
+}

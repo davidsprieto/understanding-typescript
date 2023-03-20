@@ -22,6 +22,9 @@ type Numeric = number | boolean;
 
 type Universal = Combine & Numeric;
 
+// Typescript function overloads:
+function adding(a: number, b: number): number;
+function adding(a: string, b: string): string;
 function adding(a: Combine, b: Combine) {
   // type guard:
   if (typeof a === 'string' || typeof b === 'string') {
@@ -29,6 +32,28 @@ function adding(a: Combine, b: Combine) {
   }
   return a + b;
 }
+
+const result = adding(1, 5);
+
+const concatenate = adding('David', ' Prieto');
+
+
+// Typescript Optional Chaining:
+const fetchedUserData = {
+  id: 'user',
+  name: 'David',
+  job: {title: 'CEO', description: 'Crypto Company'}
+};
+
+console.log(fetchedUserData?.job?.title);
+
+
+// Nullish Coalescing ('??'):
+const userData = null;
+
+const storedData = userData ?? 'Default';
+
+console.log(storedData);
 
 type UnknownSubordinate = Subordinate | Admin;
 
@@ -143,3 +168,5 @@ const errorBag: ErrorContainer = {
   email: 'Not a valid email!',
   username: 'Must start with a capital character!'
 };
+
+

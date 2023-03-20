@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 const s = {
     name: 'David',
     privileges: ['create-server'],
@@ -11,6 +12,19 @@ function adding(a, b) {
     }
     return a + b;
 }
+const result = adding(1, 5);
+const concatenate = adding('David', ' Prieto');
+// Typescript Optional Chaining:
+const fetchedUserData = {
+    id: 'user',
+    name: 'David',
+    job: { title: 'CEO', description: 'Crypto Company' }
+};
+console.log((_a = fetchedUserData === null || fetchedUserData === void 0 ? void 0 : fetchedUserData.job) === null || _a === void 0 ? void 0 : _a.title);
+// Nullish Coalescing ('??'):
+const userData = null;
+const storedData = userData !== null && userData !== void 0 ? userData : 'Default';
+console.log(storedData);
 function printSubordinateInformation(sub) {
     console.log('Name: ' + sub.name);
     // type guards:

@@ -132,3 +132,14 @@ if (userInputElement3) {
   (userInputElement3 as HTMLInputElement).value = 'Hello once more';
 }
 
+
+// Index Properties/Types:
+// Not sure how many properties will be in the interface nor the names of them, but they will be of type string:
+interface ErrorContainer {
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email!',
+  username: 'Must start with a capital character!'
+};

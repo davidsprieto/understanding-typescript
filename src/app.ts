@@ -1,172 +1,111 @@
-// Typescript Intersection Types & Type Guards:
-type Admin = {
-  name: string;
-  privileges: string[];
+// Typescript Built-in Generics:
+const names: Array<string> = []; // 'Array<string>' is also the same as 'string[]'
+
+const promise: Promise<number> = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(10);
+    reject(10);
+  }, 2000);
+});
+
+promise.then(data => {
+  console.log(data);
+});
+
+
+// Creating a Generic Function & Constraints:
+function merge<T extends object, U extends object>(objA: T, objB: U) {
+  return Object.assign(objA, objB);
 }
 
-type Subordinate = {
-  name:string;
-  startDate: Date;
+const mergedObj = merge({name: "David", hobbies: ["Exercising", "Travelling"]}, {age: 29});
+console.log(mergedObj);
+
+
+// More Generic Functions:
+interface Lengthy {
+  length: number;
 }
 
-type ElevatedSubordinate = Admin & Subordinate;
-
-const s: ElevatedSubordinate = {
-  name: 'David',
-  privileges: ['create-server'],
-  startDate: new Date()
-}
-
-type Combine = string | number;
-type Numeric = number | boolean;
-
-type Universal = Combine & Numeric;
-
-// Typescript function overloads:
-function adding(a: number, b: number): number;
-function adding(a: string, b: string): string;
-function adding(a: Combine, b: Combine) {
-  // type guard:
-  if (typeof a === 'string' || typeof b === 'string') {
-    return a.toString() + b.toString();
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+  let descriptionText = 'Got no value';
+  if (element.length === 1 ) {
+    descriptionText = 'Got 1 element';
+  } else if (element.length > 1) {
+    descriptionText = 'Got ' + element.length + ' elements.';
   }
-  return a + b;
+  return [element, descriptionText];
 }
 
-const result = adding(1, 5);
-
-const concatenate = adding('David', ' Prieto');
+console.log(countAndDescribe('Hello world'));
 
 
-// Typescript Optional Chaining:
-const fetchedUserData = {
-  id: 'user',
-  name: 'David',
-  job: {title: 'CEO', description: 'Crypto Company'}
-};
-
-console.log(fetchedUserData?.job?.title);
-
-
-// Nullish Coalescing ('??'):
-const userData = null;
-
-const storedData = userData ?? 'Default';
-
-console.log(storedData);
-
-type UnknownSubordinate = Subordinate | Admin;
-
-function printSubordinateInformation(sub: UnknownSubordinate) {
-  console.log('Name: ' + sub.name);
-  // type guards:
-  if ('privileges' in sub) {
-    console.log('Privileges: ' + sub.privileges);
-  }
-  if ('startDate' in sub) {
-    console.log('Start Date: ' + sub.startDate);
-  }
+// Typescript 'keyof' Constraint:
+function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
+  return 'Value: ' + obj[key];
 }
 
-printSubordinateInformation(s);
+console.log(extractAndConvert({name: 'David', age: 10}, 'name'));
 
-class Sedan {
-  drive() {
-    console.log('Driving a sedan');
+
+// Generic Classes:
+class DataStorage<T> {
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item, 1));
+  }
+
+  getItems() {
+    return [...this.data];
   }
 }
 
-class Truck {
-  drive() {
-    console.log('Driving a truck');
-  }
+const textStorage = new DataStorage<string>();
+textStorage.addItem('David');
+textStorage.addItem('Max');
+textStorage.removeItem('Max');
+console.log(textStorage.getItems());
 
-  loadCargo(amount: number) {
-    console.log(`Loading ${amount}lbs of cargo`);
-  }
+const numberStorage = new DataStorage<number>();
+numberStorage.addItem(10);
+numberStorage.addItem(20);
+console.log(numberStorage.getItems());
+
+const objStorage = new DataStorage<object>();
+const davidObj = {name: 'David'};
+objStorage.addItem(davidObj);
+
+const maxObj = {name: 'Max'};
+objStorage.addItem(maxObj);
+// ...
+objStorage.removeItem(davidObj); // this isn't successful because objects are reference types - better to add constraints to the DataStorage class to only allow primitive values to be stored in the 'data' array.
+console.log(objStorage.getItems());
+
+
+// Generic Utility Types (Partial & Readonly):
+// Partial:
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
 }
 
-type Vehicle = Sedan | Truck;
-
-const v1 = new Sedan();
-const v2 = new Truck();
-
-function useVehicle(vehicle: Vehicle) {
-  vehicle.drive();
-  // type guard:
-  if ('loadCargo' in vehicle) {
-    vehicle.loadCargo(1000);
-  }
-  // the above type guard can also be written as:
-  if (vehicle instanceof Truck) {
-    vehicle.loadCargo(1000);
-  }
+function createCourseGoal(title: string, description: string, date: Date): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = date;
+  return courseGoal as CourseGoal;
 }
 
-useVehicle(v1);
-useVehicle(v2);
-
-
-// Typescript Discriminated Unions:
-interface Bird {
-  type: 'bird';
-  flyingSpeed: number;
-}
-
-interface Horse {
-  type: 'Horse';
-  runningSpeed: number;
-}
-
-type Animal = Bird | Horse;
-
-function moveAnimal(animal: Animal) {
-  let speed: number;
-  switch (animal.type) {
-    case "bird":
-      speed = animal.flyingSpeed;
-      break;
-    case "Horse":
-      speed = animal.runningSpeed;
-      break;
-  }
-  console.log('Moving at speed: ' + speed);
-}
-
-let animal: Animal = {
-  type: "bird",
-  flyingSpeed: 10
-}
-
-moveAnimal(animal);
-
-
-// Typescript Type Casting:
-const userInputElement1 = <HTMLInputElement>document.getElementById('user-input')!;
-// or written as:
-// Use the exclamation mark if you know the value will not be null
-const userInputElement2 = document.getElementById('user-input')! as HTMLInputElement;
-
-userInputElement1.value = "Hello";
-userInputElement2.value = "Hello again";
-
-// If you're not sure whether the value is going to be null or not, remove the exclamation mark and the initial type casting then write it below with an if check and then type casted:
-const userInputElement3 = document.getElementById('user-input');
-
-if (userInputElement3) {
-  (userInputElement3 as HTMLInputElement).value = 'Hello once more';
-}
-
-
-// Index Properties/Types:
-// Not sure how many properties will be in the interface nor the names of them, but they will be of type string:
-interface ErrorContainer {
-  [prop: string]: string;
-}
-
-const errorBag: ErrorContainer = {
-  email: 'Not a valid email!',
-  username: 'Must start with a capital character!'
-};
-
-
+// Readonly (can't modify the array - can only read its contents):
+const listOfNames: Readonly<string[]> = ['David', 'Jim'];
+console.log(listOfNames);

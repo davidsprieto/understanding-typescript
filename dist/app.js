@@ -1,99 +1,79 @@
 "use strict";
-var _a;
-const s = {
-    name: 'David',
-    privileges: ['create-server'],
-    startDate: new Date()
-};
-function adding(a, b) {
-    // type guard:
-    if (typeof a === 'string' || typeof b === 'string') {
-        return a.toString() + b.toString();
-    }
-    return a + b;
+// Typescript Built-in Generics:
+const names = []; // 'Array<string>' is also the same as 'string[]'
+const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(10);
+        reject(10);
+    }, 2000);
+});
+promise.then(data => {
+    console.log(data);
+});
+// Creating a Generic Function & Constraints:
+function merge(objA, objB) {
+    return Object.assign(objA, objB);
 }
-const result = adding(1, 5);
-const concatenate = adding('David', ' Prieto');
-// Typescript Optional Chaining:
-const fetchedUserData = {
-    id: 'user',
-    name: 'David',
-    job: { title: 'CEO', description: 'Crypto Company' }
-};
-console.log((_a = fetchedUserData === null || fetchedUserData === void 0 ? void 0 : fetchedUserData.job) === null || _a === void 0 ? void 0 : _a.title);
-// Nullish Coalescing ('??'):
-const userData = null;
-const storedData = userData !== null && userData !== void 0 ? userData : 'Default';
-console.log(storedData);
-function printSubordinateInformation(sub) {
-    console.log('Name: ' + sub.name);
-    // type guards:
-    if ('privileges' in sub) {
-        console.log('Privileges: ' + sub.privileges);
+const mergedObj = merge({ name: "David", hobbies: ["Exercising", "Travelling"] }, { age: 29 });
+console.log(mergedObj);
+function countAndDescribe(element) {
+    let descriptionText = 'Got no value';
+    if (element.length === 1) {
+        descriptionText = 'Got 1 element';
     }
-    if ('startDate' in sub) {
-        console.log('Start Date: ' + sub.startDate);
+    else if (element.length > 1) {
+        descriptionText = 'Got ' + element.length + ' elements.';
     }
+    return [element, descriptionText];
 }
-printSubordinateInformation(s);
-class Sedan {
-    drive() {
-        console.log('Driving a sedan');
-    }
+console.log(countAndDescribe('Hello world'));
+// Typescript 'keyof' Constraint:
+function extractAndConvert(obj, key) {
+    return 'Value: ' + obj[key];
 }
-class Truck {
-    drive() {
-        console.log('Driving a truck');
+console.log(extractAndConvert({ name: 'David', age: 10 }, 'name'));
+// Generic Classes:
+class DataStorage {
+    constructor() {
+        this.data = [];
     }
-    loadCargo(amount) {
-        console.log(`Loading ${amount}lbs of cargo`);
+    addItem(item) {
+        this.data.push(item);
     }
-}
-const v1 = new Sedan();
-const v2 = new Truck();
-function useVehicle(vehicle) {
-    vehicle.drive();
-    // type guard:
-    if ('loadCargo' in vehicle) {
-        vehicle.loadCargo(1000);
+    removeItem(item) {
+        if (this.data.indexOf(item) === -1) {
+            return;
+        }
+        this.data.splice(this.data.indexOf(item, 1));
     }
-    // the above type guard can also be written as:
-    if (vehicle instanceof Truck) {
-        vehicle.loadCargo(1000);
+    getItems() {
+        return [...this.data];
     }
 }
-useVehicle(v1);
-useVehicle(v2);
-function moveAnimal(animal) {
-    let speed;
-    switch (animal.type) {
-        case "bird":
-            speed = animal.flyingSpeed;
-            break;
-        case "Horse":
-            speed = animal.runningSpeed;
-            break;
-    }
-    console.log('Moving at speed: ' + speed);
+const textStorage = new DataStorage();
+textStorage.addItem('David');
+textStorage.addItem('Max');
+textStorage.removeItem('Max');
+console.log(textStorage.getItems());
+const numberStorage = new DataStorage();
+numberStorage.addItem(10);
+numberStorage.addItem(20);
+console.log(numberStorage.getItems());
+const objStorage = new DataStorage();
+const davidObj = { name: 'David' };
+objStorage.addItem(davidObj);
+const maxObj = { name: 'Max' };
+objStorage.addItem(maxObj);
+// ...
+objStorage.removeItem(davidObj); // this isn't successful because objects are reference types - better to add constraints to the DataStorage class to only allow primitive values to be stored in the 'data' array.
+console.log(objStorage.getItems());
+function createCourseGoal(title, description, date) {
+    let courseGoal = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completeUntil = date;
+    return courseGoal;
 }
-let animal = {
-    type: "bird",
-    flyingSpeed: 10
-};
-moveAnimal(animal);
-// Typescript Type Casting:
-const userInputElement1 = document.getElementById('user-input');
-// or written as:
-// Use the exclamation mark if you know the value will not be null
-const userInputElement2 = document.getElementById('user-input');
-userInputElement1.value = "Hello";
-userInputElement2.value = "Hello again";
-// If you're not sure whether the value is going to be null or not, remove the exclamation mark and the initial type casting then write it below with an if check and then type casted:
-const userInputElement3 = document.getElementById('user-input');
-if (userInputElement3) {
-    userInputElement3.value = 'Hello once more';
-}
-const errorBag = {
-    email: 'Not a valid email!',
-    username: 'Must start with a capital character!'
-};
+// Readonly (can't modify the array - can only read its contents):
+const listOfNames = ['David', 'Jim'];
+console.log(listOfNames);

@@ -1,79 +1,24 @@
 "use strict";
-// Typescript Built-in Generics:
-const names = []; // 'Array<string>' is also the same as 'string[]'
-const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve(10);
-        reject(10);
-    }, 2000);
-});
-promise.then(data => {
-    console.log(data);
-});
-// Creating a Generic Function & Constraints:
-function merge(objA, objB) {
-    return Object.assign(objA, objB);
+// Typescript First Class Decorator (decorators execute when the class is defined, not when the class is instantiated):
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+function Logger(constructor) {
+    console.log("Logging...");
+    console.log(constructor);
 }
-const mergedObj = merge({ name: "David", hobbies: ["Exercising", "Travelling"] }, { age: 29 });
-console.log(mergedObj);
-function countAndDescribe(element) {
-    let descriptionText = 'Got no value';
-    if (element.length === 1) {
-        descriptionText = 'Got 1 element';
-    }
-    else if (element.length > 1) {
-        descriptionText = 'Got ' + element.length + ' elements.';
-    }
-    return [element, descriptionText];
-}
-console.log(countAndDescribe('Hello world'));
-// Typescript 'keyof' Constraint:
-function extractAndConvert(obj, key) {
-    return 'Value: ' + obj[key];
-}
-console.log(extractAndConvert({ name: 'David', age: 10 }, 'name'));
-// Generic Classes:
-class DataStorage {
+let Pers = class Pers {
     constructor() {
-        this.data = [];
+        this.name = "David";
+        console.log("Creating person object...");
     }
-    addItem(item) {
-        this.data.push(item);
-    }
-    removeItem(item) {
-        if (this.data.indexOf(item) === -1) {
-            return;
-        }
-        this.data.splice(this.data.indexOf(item, 1));
-    }
-    getItems() {
-        return [...this.data];
-    }
-}
-const textStorage = new DataStorage();
-textStorage.addItem('David');
-textStorage.addItem('Max');
-textStorage.removeItem('Max');
-console.log(textStorage.getItems());
-const numberStorage = new DataStorage();
-numberStorage.addItem(10);
-numberStorage.addItem(20);
-console.log(numberStorage.getItems());
-const objStorage = new DataStorage();
-const davidObj = { name: 'David' };
-objStorage.addItem(davidObj);
-const maxObj = { name: 'Max' };
-objStorage.addItem(maxObj);
-// ...
-objStorage.removeItem(davidObj); // this isn't successful because objects are reference types - better to add constraints to the DataStorage class to only allow primitive values to be stored in the 'data' array.
-console.log(objStorage.getItems());
-function createCourseGoal(title, description, date) {
-    let courseGoal = {};
-    courseGoal.title = title;
-    courseGoal.description = description;
-    courseGoal.completeUntil = date;
-    return courseGoal;
-}
-// Readonly (can't modify the array - can only read its contents):
-const listOfNames = ['David', 'Jim'];
-console.log(listOfNames);
+};
+Pers = __decorate([
+    Logger
+], Pers);
+const pers = new Pers();
+console.log(pers);
+// Decorator Factories:

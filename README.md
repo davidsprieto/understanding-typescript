@@ -1,4 +1,4 @@
-# Understanding Typescript - Udemy Course used to Learn & Understand TypeScript!
+# Understanding Typescript - Udemy Course Taken to Learn & Understand TypeScript!
 
 Programming Languages:
 - TypeScript

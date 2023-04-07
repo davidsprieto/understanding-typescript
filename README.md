@@ -1,2 +1,5 @@
-# Understanding Typescript
-Sections 1 - 3
+# Understanding Typescript - Learning TypeScript with a Udemy Course
+
+Programming Languages:
+- TypeScript
+- JavaScript
